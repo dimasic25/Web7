@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Самые актуальные новости{% endblock %}
+
+{% block body %}
+        <main class="container">
+            <div class="d-flex flex-row mb-2 justify-content-around text-muted flex-wrap">
+
+            {% for news_item in news_list %}
+                <div class="row">
+                    <div class="col p-3">
+                        <a href="#" class="text-primary">{{ news_item.title }}</a>
+                        <div class="">{{ news_item.dateAdded|date("d-m-Y H:i:s") }}</div>
+                        <div>Количество комментариев: {{ news_item.comments.count }}</div>
+                        <p class="card-text">{{ news_item.annotation }}</p>
+                    </div>
+                </div>
+            {%  endfor %}
+
+            </div>
+        </main>
+{%  endblock %}
