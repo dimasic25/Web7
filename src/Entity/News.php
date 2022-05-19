@@ -33,6 +33,10 @@ class News
     #[ORM\OneToMany(mappedBy: 'news', targetEntity: Comment::class)]
     private $comments;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'news')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $owner;
+
     public function __construct()
     {
         $this->dateAdded = new \DateTime();
@@ -105,6 +109,13 @@ class News
         return $this;
     }
 
+    public function incrementViewCount(): self
+    {
+        $this->viewCount += 1;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Comment>
      */
@@ -132,5 +143,22 @@ class News
         }
 
         return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

@@ -73,4 +73,17 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findActiveByNews($news): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = :val')
+            ->setParameter('val', true)
+            ->andWhere('c.news = :news')
+            ->setParameter('news', $news)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

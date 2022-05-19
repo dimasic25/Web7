@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Современные новости{% endblock %}
+
+{% block body %}
+
+    <main class="container">
+        <h2 class="font-weight-bold">{{ news.title }}</h2>
+        <h6 class="text-secondary">{{ news.dateAdded|date("d-m-Y H:i:s") }}</h6>
+
+        <div>
+            {{ news.description }}
+        </div>
+
+        <h6>Просмотров: {{ news.viewCount }}</h6>
+
+        <h4 class="mt-5">Комментарии:</h4>
+
+        {% if comments is not empty %}
+            {% for comment in comments %}
+                {{ include('layouts/comment-card.html.twig', {'comment': comment}) }}
+            {% endfor %}
+
+        {% else %}
+            <div class="text-center">
+                Комментариев нет!
+            </div>
+        {% endif %}
+
+        {% if app.user is not null %}
+        {{ form_start(comment_form) }}
+
+        <h4 class="mt-5">Оставьте комментарий:</h4>
+        <div class="form-group mt-2 mb-10">
+            {{ form_label(comment_form.body, null,
+                form_errors(comment_form.body)|length ? { 'label_attr': {'class': 'text-danger'} } : {}) }}
+            {{ form_widget(comment_form.body, form_errors(comment_form.body)|length
+                ? {'attr': {'class': 'form-control is-invalid'}}
+                : {'attr': {'class': 'form-control'}} ) }}
+            <span class="text-danger">{{ form_errors(comment_form.body) }}</span>
+            {{ form_widget(comment_form.save) }}
+        </div>
+
+        {{ form_end(comment_form) }}
+        {% endif %}
+    </main>
+{% endblock %}

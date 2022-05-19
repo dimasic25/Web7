@@ -9,7 +9,7 @@
             {% for news_item in news_list %}
                 <div class="row">
                     <div class="col p-3">
-                        <a href="#" class="text-primary">{{ news_item.title }}</a>
+                        <a href="news/{{ news_item.id }}" class="text-primary">{{ news_item.title }}</a>
                         <div class="">{{ news_item.dateAdded|date("d-m-Y H:i:s") }}</div>
                         <div>Количество комментариев: {{ news_item.comments.count }}</div>
                         <p class="card-text">{{ news_item.annotation }}</p>
